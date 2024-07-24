@@ -1,6 +1,7 @@
 package com.sa.token.springboot3.controller;
 
 import cn.dev33.satoken.annotation.*;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,12 @@ public class AnnotateForensicsController {
     @SaCheckLogin
     @RequestMapping("info")
     public String info() {
+        System.out.println("------- [身份临时切换]调用开始...");
+        StpUtil.switchTo(10044, () -> {
+            System.out.println("是否正在身份临时切换中: " + StpUtil.isSwitch());  // 输出 true
+            System.out.println("获取当前登录账号id: " + StpUtil.getLoginId());   // 输出 10044
+        });
+        System.out.println("------- [身份临时切换]调用结束...");
         return "查询用户信息";
     }
 
